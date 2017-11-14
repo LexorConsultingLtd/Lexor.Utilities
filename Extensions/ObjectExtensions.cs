@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lexor.Extensions
+namespace Lexor.Utilities.Extensions
 {
     public static class ObjectExtensions
     {
