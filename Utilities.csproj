@@ -5,4 +5,8 @@
     <RootNamespace>Lexor.Utilities</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="3.0.1" />
+  </ItemGroup>
+
 </Project>
