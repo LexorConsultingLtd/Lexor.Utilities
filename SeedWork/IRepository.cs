@@ -1,4 +1,4 @@
-﻿namespace Lexor.Utilities.Seedwork
+﻿namespace Lexor.Utilities.SeedWork
 {
     public interface IRepository<T> where T : IAggregateRoot
     {

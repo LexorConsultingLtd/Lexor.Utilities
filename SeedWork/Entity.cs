@@ -2,7 +2,7 @@
 using MediatR;
 using System.Collections.Generic;
 
-namespace Lexor.Utilities.Seedwork
+namespace Lexor.Utilities.SeedWork
 {
     public abstract class Entity
     {
