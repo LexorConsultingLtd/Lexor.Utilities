@@ -1,6 +1,8 @@
 ﻿using Lexor.Utilities.SeedWork;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
+using System.Linq;
 
 namespace Utilities.SeedWork
 {
@@ -22,6 +24,14 @@ namespace Utilities.SeedWork
 
             config.Property<int>(columnName).IsRequired();
             config.HasIndex(columnName);
+
+            //Change FK delete behaviour to Restrict instead of Cascade
+            var foreignKeys = config.Metadata.GetForeignKeys()
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+            foreach (var foreignKey in foreignKeys)
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
         }
     }
 }
