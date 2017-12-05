@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Utilities.SeedWork;
 
 namespace Lexor.Utilities.Extensions
 {
@@ -24,6 +26,25 @@ namespace Lexor.Utilities.Extensions
                     .MakeGenericMethod(configType.GenericType);
                 method.Invoke(modelBuilder, new[] { config });
             }
+        }
+
+        // https://github.com/dotnet-architecture/eShopOnWeb
+        public static IEnumerable<T> List<T>(this DbContext context, ISpecification<T> spec) where T : class
+        {
+            // fetch a Queryable that includes all expression-based includes
+            var queryableResultWithIncludes = spec.Includes
+                .Aggregate(context.Set<T>().AsQueryable(),
+                    (current, include) => current.Include(include));
+
+            // modify the IQueryable to include any string-based include statements
+            var secondaryResult = spec.IncludeStrings
+                .Aggregate(queryableResultWithIncludes,
+                    (current, include) => current.Include(include));
+
+            // return the result of the query using the specification's criteria expression
+            return secondaryResult
+                .Where(spec.Criteria)
+                .AsEnumerable();
         }
     }
 }
