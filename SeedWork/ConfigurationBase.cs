@@ -8,8 +8,9 @@ namespace Utilities.SeedWork
 {
     public abstract class ConfigurationBase
     {
-        public virtual void ConfigureEntity<T>(EntityTypeBuilder<T> config) where T : Entity
+        public virtual void ConfigureEntity<T>(EntityTypeBuilder<T> config, string tableName = null) where T : Entity
         {
+            if (!string.IsNullOrEmpty(tableName)) config.ToTable(tableName);
             config.Property(t => t.Id).IsRequired();
             config.HasKey(t => t.Id);
             config.Ignore(t => t.DomainEvents);
