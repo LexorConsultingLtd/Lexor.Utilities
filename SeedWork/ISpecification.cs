@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lexor.Utilities.DataTables;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -10,8 +11,6 @@ namespace Utilities.SeedWork
         Expression<Func<T, bool>> Criteria { get; }
         List<Expression<Func<T, object>>> Includes { get; }
         List<string> IncludeStrings { get; }
-        int Start { get; }
-        int Length { get; }
-        int Order { get; }
+        DataTablesAjaxPostModel Model { get; }
     }
 }

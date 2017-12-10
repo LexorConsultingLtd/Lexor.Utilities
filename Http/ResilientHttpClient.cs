@@ -74,11 +74,22 @@ namespace Lexor.Utilities.Http
 
         public Task<string> GetStringAsync(string uri, string authorizationToken = null, string authorizationMethod = "Bearer")
         {
+            return GetStringAsync<object>(uri, null, authorizationToken, authorizationMethod);
+        }
+
+
+        public Task<string> GetStringAsync<T>(string uri, T item, string authorizationToken = null, string authorizationMethod = "Bearer")
+        {
             var origin = GetOriginFromUri(uri);
 
             return HttpInvoker(origin, async () =>
             {
                 var requestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+                if (item != null)
+                {
+                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(item), System.Text.Encoding.UTF8, "application/json");
+                }
 
                 SetAuthorizationHeader(requestMessage);
 
