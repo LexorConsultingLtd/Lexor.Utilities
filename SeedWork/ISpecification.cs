@@ -10,5 +10,8 @@ namespace Utilities.SeedWork
         Expression<Func<T, bool>> Criteria { get; }
         List<Expression<Func<T, object>>> Includes { get; }
         List<string> IncludeStrings { get; }
+        int Start { get; }
+        int Length { get; }
+        int Order { get; }
     }
 }

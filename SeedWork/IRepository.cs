@@ -14,6 +14,7 @@ namespace Lexor.Utilities.SeedWork
         Task<T> GetSingleBySpecAsync(ISpecification<T> spec);
         Task<List<T>> ListAllAsync();
         Task<List<T>> ListAsync(ISpecification<T> spec);
+        Task<RecordCounts> CountAsync(ISpecification<T> spec);
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
