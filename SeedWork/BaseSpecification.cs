@@ -26,9 +26,9 @@ namespace Utilities.SeedWork
         }
 
         // string-based includes allow for including children of children, e.g. Basket.Items.Product
-        protected virtual void AddInclude(string includeString)
+        protected virtual void AddInclude(params string[] includeString)
         {
-            IncludeStrings.Add(includeString);
+            IncludeStrings.Add(string.Join(".", includeString));
         }
     }
 }
