@@ -15,9 +15,12 @@ namespace Utilities.EFCore
             config.HasQueryFilter(t => !EF.Property<bool>(t, SoftDeleteColumnName));
         }
 
-        public static void ProcessSoftDeletes(ChangeTracker changeTracker)
+        public static void Process(ChangeTracker changeTracker)
         {
-            var softDeleteEntries = changeTracker.Entries()
+            var entries = changeTracker.Entries().ToList();
+            if (entries.Count == 0) return;
+
+            var softDeleteEntries = entries
                 .Where(e => e.Properties.Any(p => p.Metadata.Name.Equals(SoftDeleteColumnName)));
             foreach (var entry in softDeleteEntries)
             {
