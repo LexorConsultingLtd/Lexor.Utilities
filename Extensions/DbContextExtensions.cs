@@ -28,6 +28,11 @@ namespace Lexor.Utilities.Extensions
             }
         }
 
+        public static void DisableAutomaticEntityTracking(this DbContext context)
+        {
+            context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
+
         // https://github.com/dotnet-architecture/eShopOnWeb
         public static IEnumerable<T> List<T>(this DbContext context, ISpecification<T> spec) where T : class
         {
