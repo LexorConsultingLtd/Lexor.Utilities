@@ -8,28 +8,22 @@ namespace Lexor.Utilities.SeedWork
     {
         IUnitOfWork UnitOfWork { get; }
 
-        #region Asynchronous Interface
-
         Task<T> GetByIdAsync(int id);
         Task<T> GetSingleBySpecAsync(ISpecification<T> spec);
         Task<List<T>> ListAllAsync();
         Task<List<T>> ListAsync(ISpecification<T> spec);
         Task<RecordCounts> CountAsync(ISpecification<T> spec);
         Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<T> UpdateAsync(T entity);
+        Task<bool> DeleteAsync(T entity);
 
-        #endregion
+        #region Generic CRUD Methods
 
-        #region Synchronous Interface
-
-        //T GetById(int id);
-        //T GetSingleBySpec(ISpecification<T> spec);
-        //IEnumerable<T> ListAll();
-        //IEnumerable<T> List(ISpecification<T> spec);
-        //T Add(T entity);
-        //void Update(T entity);
-        //void Delete(T entity);
+        Task<TEntity> GetByIdAsync<TEntity>(int id) where TEntity : Entity;
+        //Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : Entity;
+        Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : Entity;
+        Task<bool> DeleteAsync<TEntity>(int id) where TEntity : Entity;
+        Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : Entity;
 
         #endregion
     }
