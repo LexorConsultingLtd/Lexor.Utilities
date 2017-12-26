@@ -26,7 +26,7 @@ namespace Utilities.SeedWork
             config.Property<int>(columnName).IsRequired();
             config.HasIndex(columnName);
 
-            //Change FK delete behaviour to Restrict instead of Cascade
+            // Change FK delete behaviour to Restrict instead of Cascade
             var foreignKeys = config.Metadata.GetForeignKeys()
                 .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
             foreach (var foreignKey in foreignKeys)

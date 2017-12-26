@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 using System.Linq;
 
 namespace Utilities.EFCore
@@ -17,24 +18,31 @@ namespace Utilities.EFCore
 
         public static void Process(ChangeTracker changeTracker)
         {
-            var entries = changeTracker.Entries().ToList();
-            if (entries.Count == 0) return;
-
-            var softDeleteEntries = entries
-                .Where(e => e.Properties.Any(p => p.Metadata.Name.Equals(SoftDeleteColumnName)));
-            foreach (var entry in softDeleteEntries)
+            try
             {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues[SoftDeleteColumnName] = false;
-                        break;
+                var entries = changeTracker.Entries().ToList();
+                if (entries.Count == 0) return;
 
-                    case EntityState.Deleted:
-                        entry.CurrentValues[SoftDeleteColumnName] = true;
-                        entry.State = EntityState.Modified;
-                        break;
+                var softDeleteEntries = entries
+                    .Where(e => e.Properties.Any(p => p.Metadata.Name.Equals(SoftDeleteColumnName)));
+                foreach (var entry in softDeleteEntries)
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.CurrentValues[SoftDeleteColumnName] = false;
+                            break;
+
+                        case EntityState.Deleted:
+                            entry.CurrentValues[SoftDeleteColumnName] = true;
+                            entry.State = EntityState.Modified;
+                            break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Exception processing {nameof(SoftDeletes)}: {ex.Message}", ex);
             }
         }
     }
