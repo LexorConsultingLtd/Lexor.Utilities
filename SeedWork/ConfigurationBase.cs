@@ -19,19 +19,22 @@ namespace Utilities.SeedWork
         protected static string FkColName(Type entityType) => FkColName(entityType.Name);
         protected static string FkColName(string entityName) => $"{entityName}Id";
 
-        protected static void DefineForeignKey<T>(EntityTypeBuilder<T> config, Type entityType) where T : Entity
+        protected static void DefineForeignKey<T>(EntityTypeBuilder<T> config, Type entityType, bool restrictDeletes = false) where T : Entity
         {
             var columnName = FkColName(entityType);
 
             config.Property<int>(columnName).IsRequired();
             config.HasIndex(columnName);
 
-            // Change FK delete behaviour to Restrict instead of Cascade
-            var foreignKeys = config.Metadata.GetForeignKeys()
-                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
-            foreach (var foreignKey in foreignKeys)
+            if (restrictDeletes || typeof(Enumeration).IsAssignableFrom(entityType))
             {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+                // Change FK delete behaviour to Restrict instead of Cascade (the default)
+                var foreignKeys = config.Metadata.GetForeignKeys()
+                    .Where(fk => fk.PrincipalEntityType.ClrType == entityType);
+                foreach (var foreignKey in foreignKeys)
+                {
+                    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+                }
             }
         }
     }
