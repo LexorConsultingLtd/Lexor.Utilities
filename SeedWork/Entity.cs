@@ -1,5 +1,5 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 
 namespace Lexor.Utilities.SeedWork
@@ -9,10 +9,10 @@ namespace Lexor.Utilities.SeedWork
 
         int? _requestedHashCode;
         int _Id;
-        
+
         private List<INotification> _domainEvents;
 
-        public virtual  int Id 
+        public virtual int Id
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Lexor.Utilities.SeedWork
             }
         }
 
-        public List<INotification> DomainEvents => _domainEvents;        
+        public List<INotification> DomainEvents => _domainEvents;
         public void AddDomainEvent(INotification eventItem)
         {
             _domainEvents = _domainEvents ?? new List<INotification>();
@@ -39,8 +39,10 @@ namespace Lexor.Utilities.SeedWork
 
         public bool IsTransient()
         {
-            return this.Id == default(Int32);
+            return Id == default(Int32);
         }
+
+        public abstract void CopyValues(Entity source);
 
         public override bool Equals(object obj)
         {
