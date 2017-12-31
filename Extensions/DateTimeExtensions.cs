@@ -20,5 +20,11 @@ namespace Lexor.Utilities.Extensions
             if (value.HasTimeComponent()) result += value.FormatTime();
             return result;
         }
+
+        public static DateTime WithTime(this DateTime date, DateTime time)
+        {
+            var result = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
+            return result;
+        }
     }
 }
