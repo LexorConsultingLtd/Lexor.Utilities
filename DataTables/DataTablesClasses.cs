@@ -13,6 +13,7 @@ namespace Lexor.Utilities.DataTables
         public List<Column> columns { get; set; }
         public Search search { get; set; }
         public List<Order> order { get; set; }
+        public CustomFilter customFilter { get; set; }
     }
 
     public class Column
@@ -40,12 +41,19 @@ namespace Lexor.Utilities.DataTables
         public string dir { get; set; }
     }
 
+    public class CustomFilter
+    {
+        public string name { get; set; }
+        public object[] args { get; set; }
+    }
+
     public class DataTablesQueryResult<T> where T : class
     {
         public int FilteredRecordCount { get; set; }
         public int TotalRecordCount { get; set; }
         public IEnumerable<T> Data { get; set; }
     }
+
 
     public class DataTablesAjaxResult
     {
