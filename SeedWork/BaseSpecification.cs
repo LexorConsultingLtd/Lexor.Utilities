@@ -8,7 +8,7 @@ namespace Utilities.SeedWork
     // https://github.com/dotnet-architecture/eShopOnWeb
     public abstract class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecification(Expression<Func<T, bool>> criteria, DataTablesAjaxPostModel model = null)
+        protected BaseSpecification(Expression<Func<T, bool>> criteria = null, DataTablesAjaxPostModel model = null)
         {
             Criteria = criteria;
             Model = model;
