@@ -23,7 +23,7 @@ namespace Lexor.Utilities.Extensions
                     logger.LogInformation($"Migrating database associated with context {typeof(TContext).Name}");
 
                     var retry = Policy.Handle<SqlException>()
-                         .WaitAndRetry(new TimeSpan[]
+                         .WaitAndRetry(new[]
                          {
                              TimeSpan.FromSeconds(5),
                              TimeSpan.FromSeconds(10),
