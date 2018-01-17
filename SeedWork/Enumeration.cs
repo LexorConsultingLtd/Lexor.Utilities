@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,9 +8,9 @@ namespace Lexor.Utilities.SeedWork
 {
     public abstract class Enumeration : IComparable
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         protected Enumeration()
         {
@@ -45,14 +46,9 @@ namespace Lexor.Utilities.SeedWork
 
         public override bool Equals(object obj)
         {
-            var otherValue = obj as Enumeration;
+            if (!(obj is Enumeration otherValue)) return false;
 
-            if (otherValue == null)
-            {
-                return false;
-            }
-
-            var typeMatches = GetType().Equals(obj.GetType());
+            var typeMatches = GetType() == obj.GetType();
             var valueMatches = Id.Equals(otherValue.Id);
 
             return typeMatches && valueMatches;
@@ -98,6 +94,12 @@ namespace Lexor.Utilities.SeedWork
         public int CompareTo(object other)
         {
             return Id.CompareTo(((Enumeration)other).Id);
+        }
+
+        protected static IEnumerable<SelectListItem> AsSelectListItems<T>(IEnumerable<T> list) where T : Enumeration
+        {
+            var result = list.Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name }).ToList();
+            return result;
         }
     }
 }
