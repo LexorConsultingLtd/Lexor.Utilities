@@ -1,4 +1,4 @@
-﻿namespace Lexor.Utilities.Extensions
+﻿namespace Utilities.Extensions
 {
     public static class BooleanExtensions
     {

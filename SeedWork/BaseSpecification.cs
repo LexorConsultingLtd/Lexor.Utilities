@@ -1,7 +1,7 @@
-﻿using Lexor.Utilities.DataTables;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Utilities.DataTables;
 
 namespace Utilities.SeedWork
 {

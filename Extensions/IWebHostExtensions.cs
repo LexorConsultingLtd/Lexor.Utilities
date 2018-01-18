@@ -6,7 +6,7 @@ using Polly;
 using System;
 using System.Data.SqlClient;
 
-namespace Lexor.Utilities.Extensions
+namespace Utilities.Extensions
 {
     public static class IWebHostExtensions
     {

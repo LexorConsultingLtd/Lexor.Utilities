@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Lexor.Utilities.Http
+namespace Utilities.Http
 {
     /// <summary>
     /// HttpClient wrapper that integrates Retry and Circuit

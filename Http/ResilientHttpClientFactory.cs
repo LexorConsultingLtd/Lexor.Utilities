@@ -4,7 +4,7 @@ using Polly;
 using System;
 using System.Net.Http;
 
-namespace Lexor.Utilities.Http
+namespace Utilities.Http
 {
     public class ResilientHttpClientFactory : IResilientHttpClientFactory
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities.SeedWork
 {
     public abstract class Enumeration : IComparable
     {

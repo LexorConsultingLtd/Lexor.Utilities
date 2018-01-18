@@ -1,6 +1,6 @@
-﻿using Lexor.Utilities.SeedWork;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Utilities.SeedWork;
 
 namespace Utilities.Extensions
 {

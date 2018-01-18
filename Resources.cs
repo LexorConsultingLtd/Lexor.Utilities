@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities
 {
     public class Resources
     {

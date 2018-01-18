@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities.SeedWork
 {
     public abstract class ValueObject
     {

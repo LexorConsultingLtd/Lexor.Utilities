@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable InconsistentNaming
 
-namespace Lexor.Utilities.DataTables
+namespace Utilities.DataTables
 {
     // Borrowed from https://goo.gl/MYza9n
 

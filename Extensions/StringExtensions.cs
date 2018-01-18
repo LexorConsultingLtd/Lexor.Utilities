@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Lexor.Utilities.Extensions
+namespace Utilities.Extensions
 {
     public static class StringExtensions
     {

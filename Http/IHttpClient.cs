@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Lexor.Utilities.Http
+namespace Utilities.Http
 {
     public interface IHttpClient
     {

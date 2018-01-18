@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Utilities.SeedWork;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities.SeedWork
 {
     public interface IRepository<T> where T : IAggregateRoot
     {

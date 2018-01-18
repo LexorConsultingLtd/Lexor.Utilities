@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities.SeedWork
 {
     public abstract class Entity
     {

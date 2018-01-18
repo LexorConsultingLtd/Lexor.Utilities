@@ -1,5 +1,4 @@
-﻿using Lexor.Utilities.SeedWork;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Linq;

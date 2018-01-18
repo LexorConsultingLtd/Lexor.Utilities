@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Utilities.SeedWork;
 
-namespace Lexor.Utilities.Extensions
+namespace Utilities.Extensions
 {
     public static class DbContextExtensions
     {

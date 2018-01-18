@@ -1,5 +1,5 @@
-﻿using Lexor.Utilities.Extensions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Utilities.Extensions;
 
 namespace Utilities.EFCore
 {

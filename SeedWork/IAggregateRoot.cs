@@ -1,6 +1,4 @@
-﻿namespace Lexor.Utilities.SeedWork
+﻿namespace Utilities.SeedWork
 {
-
     public interface IAggregateRoot { }
-
 }

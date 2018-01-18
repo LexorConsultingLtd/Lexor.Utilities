@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lexor.Utilities.Routes
+namespace Utilities.Routes
 {
     public static class Routes
     {

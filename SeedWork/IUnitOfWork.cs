@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lexor.Utilities.SeedWork
+namespace Utilities.SeedWork
 {
     public interface IUnitOfWork : IDisposable
     {        

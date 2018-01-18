@@ -1,4 +1,4 @@
-﻿namespace Lexor.Utilities.Http
+﻿namespace Utilities.Http
 {
     public interface IResilientHttpClientFactory
     {

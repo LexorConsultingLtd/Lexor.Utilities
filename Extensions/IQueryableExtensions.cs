@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Lexor.Utilities.Extensions
+namespace Utilities.Extensions
 {
     public static class IQueryableExtensions
     {
