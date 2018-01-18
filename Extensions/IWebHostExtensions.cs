@@ -10,7 +10,7 @@ namespace Utilities.Extensions
 {
     public static class IWebHostExtensions
     {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
+        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider, IWebHost> seeder) where TContext : DbContext
         {
             using (var scope = webHost.Services.CreateScope())
             {
@@ -37,7 +37,7 @@ namespace Utilities.Extensions
                         //apply to transient exceptions.
 
                         context.Database.Migrate();
-                        seeder(context, services);
+                        seeder(context, services, webHost);
                     });
 
 
