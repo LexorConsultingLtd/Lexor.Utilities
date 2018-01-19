@@ -12,7 +12,7 @@ namespace Utilities.EFCore
 
         public static void Enable<T>(EntityTypeBuilder<T> config) where T : class
         {
-            config.Property<bool>(SoftDeleteColumnName);
+            config.Property<bool>(SoftDeleteColumnName).HasDefaultValue(false);
             config.HasQueryFilter(t => !EF.Property<bool>(t, SoftDeleteColumnName));
         }
 
