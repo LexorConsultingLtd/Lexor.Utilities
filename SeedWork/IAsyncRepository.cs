@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Utilities.SeedWork
 {
-    public interface IRepository<T> where T : IAggregateRoot
+    public interface IAsyncRepository<T> where T : IAggregateRoot
     {
         IUnitOfWork UnitOfWork { get; }
 

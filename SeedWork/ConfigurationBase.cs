@@ -9,7 +9,8 @@ namespace Utilities.SeedWork
     {
         public virtual void ConfigureEntity<T>(EntityTypeBuilder<T> config, string tableName = null) where T : Entity
         {
-            if (!string.IsNullOrEmpty(tableName)) config.ToTable(tableName);
+            tableName = tableName ?? $"{typeof(T).Name}s";
+            config.ToTable(tableName);
             config.Property(t => t.Id).IsRequired();
             config.HasKey(t => t.Id);
             config.Ignore(t => t.DomainEvents);
