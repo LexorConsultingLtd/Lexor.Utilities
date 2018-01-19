@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Utilities.SeedWork
 {
@@ -11,6 +12,8 @@ namespace Utilities.SeedWork
         public string Name { get; set; }
 
         public int Id { get; set; }
+
+        public bool HasValue => Id == default(int);
 
         protected Enumeration()
         {
@@ -96,7 +99,7 @@ namespace Utilities.SeedWork
             return Id.CompareTo(((Enumeration)other).Id);
         }
 
-        protected static IEnumerable<SelectListItem> AsSelectListItems<T>(IEnumerable<T> list) where T : Enumeration
+        public static IEnumerable<SelectListItem> AsSelectListItems<T>(IEnumerable<T> list) where T : Enumeration
         {
             var result = list.Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name }).ToList();
             return result;

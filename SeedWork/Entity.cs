@@ -89,5 +89,11 @@ namespace Utilities.SeedWork
         {
             return !(left == right);
         }
+
+        public T CheckEntityType<T>() where T : Entity
+        {
+            if (this is T result) return result;
+            throw new ArgumentOutOfRangeException($"Entity type must be {typeof(T).Name}");
+        }
     }
 }
