@@ -13,11 +13,9 @@ namespace Utilities.SeedWork
 
         public int Id { get; set; }
 
-        public bool HasValue => Id == default(int);
+        public bool HasValue => Id != 0;
 
-        protected Enumeration()
-        {
-        }
+        protected Enumeration() { }
 
         protected Enumeration(int id, string name)
         {
