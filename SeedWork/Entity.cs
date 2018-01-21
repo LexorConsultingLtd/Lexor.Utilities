@@ -39,7 +39,7 @@ namespace Utilities.SeedWork
 
         public bool IsTransient()
         {
-            return Id == default(Int32);
+            return Id == 0;
         }
 
         public abstract void CopyValues(Entity source);
