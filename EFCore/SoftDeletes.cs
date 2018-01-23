@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace Utilities.EFCore
 {
-    public class SoftDeletes
+    public static class SoftDeletes
     {
         public const string SoftDeleteColumnName = "IsDeleted";
 
-        public static void Enable<T>(EntityTypeBuilder<T> config) where T : class
+        public static void EnableSoftDeletes<T>(this EntityTypeBuilder<T> config) where T : class
         {
             config.Property<bool>(SoftDeleteColumnName).HasDefaultValue(false);
             config.HasQueryFilter(t => !EF.Property<bool>(t, SoftDeleteColumnName));

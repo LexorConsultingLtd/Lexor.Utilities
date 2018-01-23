@@ -2,12 +2,13 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Linq;
+using Utilities.SeedWork;
 
-namespace Utilities.SeedWork
+namespace Utilities.Extensions
 {
-    public abstract class ConfigurationBase
+    public static class EntityTypeBuilderExtensions
     {
-        public virtual void ConfigureEntity<T>(EntityTypeBuilder<T> config, string tableName = null) where T : Entity
+        public static void ConfigureEntity<T>(this EntityTypeBuilder<T> config, string tableName = null) where T : Entity
         {
             tableName = tableName ?? $"{typeof(T).Name}s";
             config.ToTable(tableName);
@@ -16,12 +17,9 @@ namespace Utilities.SeedWork
             config.Ignore(t => t.DomainEvents);
         }
 
-        protected static string FkColName(Type entityType) => FkColName(entityType.Name);
-        protected static string FkColName(string entityName) => $"{entityName}Id";
-
-        protected static void DefineForeignKey<T>(EntityTypeBuilder<T> config, Type entityType, bool restrictDeletes = false) where T : Entity
+        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool restrictDeletes = false) where T : Entity
         {
-            var columnName = FkColName(entityType);
+            var columnName = $"{entityType.Name}Id";
 
             config.Property<int>(columnName).IsRequired();
             config.HasIndex(columnName);
