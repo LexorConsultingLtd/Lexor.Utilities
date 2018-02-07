@@ -31,9 +31,8 @@ namespace Utilities.DataTables
         public string value { get; set; }
         public string regex { get; set; }
 
-        public string SearchExpression =>
-            string.IsNullOrWhiteSpace(value) ? "" :
-            $"%{value.Trim().Replace(" ", "%")}%";
+        public string SearchAnywhereExpression => string.IsNullOrWhiteSpace(value) ? "" : $"%{value.Trim().Replace(" ", "%")}%";
+        public string SearchStartExpression => string.IsNullOrWhiteSpace(value) ? "" : $"{value.Trim()}%";
     }
 
     public class Order
