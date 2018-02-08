@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Utilities.SeedWork
 {
     public interface IAsyncRepository<T> where T : IAggregateRoot
     {
+        ClaimsPrincipal User { set; }
         IUnitOfWork UnitOfWork { get; }
 
         Task<T> GetByIdAsync(int id);
