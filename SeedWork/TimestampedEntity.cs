@@ -34,12 +34,15 @@ namespace Utilities.SeedWork
 
         #region Triggers
 
+        public class ExternallyUpdatedAttribute : Attribute { }
+
         public static async Task EnsureTriggersExistAsync(DbContext context)
         {
-            var entities = context.Model.GetEntityTypes()
-                .Where(e => e.ClrType.IsSubclassOf(typeof(TimestampedEntity)))
-                .ToList();
-            foreach (var entity in entities)
+            var entitiesNeedingTriggers = context.Model.GetEntityTypes()
+                .Where(e => e.ClrType.IsSubclassOf(typeof(TimestampedEntity)) &&
+                            Attribute.GetCustomAttributes(e.ClrType).Any(a => a is ExternallyUpdatedAttribute)
+                );
+            foreach (var entity in entitiesNeedingTriggers)
             {
                 await EnsureTriggerExists(context, entity);
             }
