@@ -11,9 +11,9 @@ namespace Utilities.Extensions
 
         public static bool HasTimeComponent(this DateTime value) => !DateOnly(value);
 
-        public static string FormatDate(this DateTime value) => value.ToLocalTime().ToString("MMM d, yyyy");
-        public static string FormatTime(this DateTime value) => value.ToLocalTime().ToString("hh:mm tt");
-        public static string FormatTimestamp(this DateTime value) => value.ToLocalTime().ToString("MMM d, yyyy hh:mm:ss tt");
+        public static string FormatDate(this DateTime value) => value.ToString("MMM d, yyyy");
+        public static string FormatTime(this DateTime value) => value.ToString("hh:mm tt");
+        public static string FormatTimestamp(this DateTime value) => value.ToString("MMM d, yyyy hh:mm:ss tt");
 
         public static string Format(this DateTime value)
         {

@@ -12,7 +12,7 @@ namespace Utilities.SeedWork
     {
         public void SetTimestampInfo(string updatedBy, EntityState entityState)
         {
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             UpdatedAt = now;
             UpdatedBy = updatedBy;
             if (entityState == EntityState.Added)
