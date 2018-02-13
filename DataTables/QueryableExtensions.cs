@@ -12,14 +12,12 @@ namespace Utilities.DataTables
             var firstSortField = true;
             foreach (var order in model.order)
             {
-                var fieldName = model.columns[order.column].data;
+                var sortField = model.columns[order.column].data;
                 var sortAscending = order.dir.ToLower().Equals("asc");
 
                 var parameter = Expression.Parameter(typeof(T), "x");
-                var selector = Expression.PropertyOrField(parameter, fieldName);
-                var method = sortAscending
-                    ? firstSortField ? nameof(Queryable.OrderBy) : nameof(Queryable.ThenBy)
-                    : firstSortField ? nameof(Queryable.OrderByDescending) : nameof(Queryable.ThenByDescending);
+                var selector = GetSelector<T>(parameter, sortField);
+                var method = GetSortMethodName(sortAscending, firstSortField);
                 expression = Expression.Call(
                     typeof(Queryable),
                     method,
@@ -30,6 +28,25 @@ namespace Utilities.DataTables
                 firstSortField = false;
             }
             return firstSortField ? source : source.Provider.CreateQuery<T>(expression);
+        }
+
+        private static Expression GetSelector<T>(Expression parameter, string sortField)
+        {
+            var selector = sortField
+                .Split(".")
+                .Aggregate<string, Expression>(
+                    null,
+                    (current, fieldName) => Expression.PropertyOrField(current ?? parameter, fieldName)
+                );
+            return selector;
+        }
+
+        private static string GetSortMethodName(bool sortAscending, bool firstSortField)
+        {
+            var method = sortAscending
+                ? firstSortField ? nameof(Queryable.OrderBy) : nameof(Queryable.ThenBy)
+                : firstSortField ? nameof(Queryable.OrderByDescending) : nameof(Queryable.ThenByDescending);
+            return method;
         }
     }
 }
