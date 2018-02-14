@@ -17,11 +17,11 @@ namespace Utilities.Extensions
             config.Ignore(t => t.DomainEvents);
         }
 
-        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool restrictDeletes = false) where T : Entity
+        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool restrictDeletes = false, bool required = true) where T : Entity
         {
             var columnName = $"{entityType.Name}Id";
 
-            config.Property<int>(columnName).IsRequired();
+            config.Property(columnName).IsRequired(required);
             config.HasIndex(columnName);
 
             if (restrictDeletes || typeof(Enumeration).IsAssignableFrom(entityType))
