@@ -27,5 +27,8 @@ namespace Utilities.Extensions
             var result = new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second, time.Millisecond);
             return result;
         }
+
+        public static bool IsNewlyUpdated(this DateTime date) =>
+            DateTime.Now - date <= TimeSpan.FromDays(1);
     }
 }
