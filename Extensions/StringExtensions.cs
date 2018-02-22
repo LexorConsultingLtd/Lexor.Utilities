@@ -22,5 +22,13 @@ namespace Utilities.Extensions
             var provider = CodePagesEncodingProvider.Instance;
             Encoding.RegisterProvider(provider);
         }
+
+        public static bool IsValidPostalCode(this string postalCode) =>
+            string.IsNullOrEmpty(postalCode) || Regex.IsMatch(postalCode, @"^(?:[A-Z]\d){3}$");
+
+        public static string FormatAsPostalCode(this string postalCode) =>
+            !string.IsNullOrEmpty(postalCode) && postalCode.IsValidPostalCode()
+                ? postalCode.Substring(0, 3) + ' ' + postalCode.Substring(3)
+                : postalCode;
     }
 }
