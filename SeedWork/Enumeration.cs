@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Utilities.SeedWork
 {
@@ -101,6 +101,18 @@ namespace Utilities.SeedWork
         {
             var result = list.Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name }).ToList();
             return result;
+        }
+
+        public static void SeedEnumerationTable<T>(DbSet<T> dbSet) where T : Enumeration
+        {
+            const string valuesStaticMethodName = "List";
+
+            if (dbSet.Any()) return;
+            var method = typeof(T).GetMethod(valuesStaticMethodName);
+            if (method == null) return;
+
+            var values = (IEnumerable<T>)method.Invoke(null, null);
+            dbSet.AddRange(values);
         }
     }
 }
