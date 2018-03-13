@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Utilities.SeedWork;
 
 namespace Utilities.Routes
 {
@@ -12,6 +13,8 @@ namespace Utilities.Routes
                     return null;
                 case IDictionary<string, string> values:
                     return values;
+                case Entity entity:
+                    return GetRouteValues(entity.Id);
             }
             return new Dictionary<string, string> { { "id", route.ToString() } };
         }
