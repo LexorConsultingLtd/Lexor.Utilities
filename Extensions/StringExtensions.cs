@@ -30,5 +30,7 @@ namespace Utilities.Extensions
             !string.IsNullOrEmpty(postalCode) && postalCode.IsValidPostalCode()
                 ? postalCode.Substring(0, 3) + ' ' + postalCode.Substring(3)
                 : postalCode;
+
+        public static string ToSqlLiteral(this string s) => s.Replace("'", "''");
     }
 }
