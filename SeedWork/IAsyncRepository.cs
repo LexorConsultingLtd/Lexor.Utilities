@@ -21,7 +21,7 @@ namespace Utilities.SeedWork
         #region Generic CRUD Methods
 
         Task<TEntity> GetByIdAsync<TEntity>(int id) where TEntity : Entity;
-        //Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : Entity;
+        Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : Entity;
         Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : Entity;
         Task<bool> DeleteAsync<TEntity>(int id) where TEntity : Entity;
         Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : Entity;
