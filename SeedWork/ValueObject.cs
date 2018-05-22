@@ -30,21 +30,26 @@ namespace Utilities.SeedWork
             {
                 return false;
             }
-            ValueObject other = (ValueObject)obj;
-            IEnumerator<object> thisValues = GetAtomicValues().GetEnumerator();
-            IEnumerator<object> otherValues = other.GetAtomicValues().GetEnumerator();
-            while (thisValues.MoveNext() && otherValues.MoveNext())
+
+            var other = (ValueObject)obj;
+            using (var thisValues = GetAtomicValues().GetEnumerator())
+            using (var otherValues = other.GetAtomicValues().GetEnumerator())
             {
-                if (ReferenceEquals(thisValues.Current, null) ^ ReferenceEquals(otherValues.Current, null))
+                while (thisValues.MoveNext() && otherValues.MoveNext())
                 {
-                    return false;
+                    if (ReferenceEquals(thisValues.Current, null) ^ ReferenceEquals(otherValues.Current, null))
+                    {
+                        return false;
+                    }
+
+                    if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current))
+                    {
+                        return false;
+                    }
                 }
-                if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current))
-                {
-                    return false;
-                }
+
+                return !thisValues.MoveNext() && !otherValues.MoveNext();
             }
-            return !thisValues.MoveNext() && !otherValues.MoveNext();
         }
 
 
@@ -57,7 +62,7 @@ namespace Utilities.SeedWork
 
         public ValueObject GetCopy()
         {
-            return this.MemberwiseClone() as ValueObject;
+            return MemberwiseClone() as ValueObject;
         }
     }
 }
