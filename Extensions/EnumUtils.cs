@@ -17,8 +17,8 @@ namespace Utilities.Extensions
                 Enum.GetNames(typeof(T))
                     .Select((item, index) => new SelectListItem
                     {
-                        Text = item.SplitCamelCase(),
-                        Value = index.ToString()
+                        Value = item,
+                        Text = item.SplitCamelCase()
                     })
             );
             return items;
