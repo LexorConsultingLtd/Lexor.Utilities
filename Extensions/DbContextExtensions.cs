@@ -28,6 +28,24 @@ namespace Utilities.Extensions
             }
         }
 
+        public static void ApplyOtherConfigurations(this DbContext context, ModelBuilder modelBuilder)
+        {
+            var configTypes = Assembly.GetAssembly(context.GetType())
+                .GetTypes()
+                .Where(t => !t.IsAbstract)
+                .SelectMany(t => t.GetInterfaces().Select(i => new { ConfigClass = t, Interface = i }))
+                .Where(c => c.Interface == typeof(IOtherConfiguration))
+                .Select(c => new { c.ConfigClass })
+                .ToList();
+            foreach (var configType in configTypes)
+            {
+                var config = Activator.CreateInstance(configType.ConfigClass);
+                var method = typeof(IOtherConfiguration)
+                    .GetMethod(nameof(IOtherConfiguration.Configure));
+                method.Invoke(config, new[] { (object)modelBuilder });
+            }
+        }
+
         public static void DisableAutomaticEntityTracking(this DbContext context)
         {
             context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
