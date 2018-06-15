@@ -17,9 +17,9 @@ namespace Utilities.Extensions
             config.Ignore(t => t.DomainEvents);
         }
 
-        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool required = true) where T : Entity
+        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool required = true, string columnName = null) where T : Entity
         {
-            var columnName = $"{entityType.Name}Id";
+            columnName = columnName ?? $"{entityType.Name}Id";
 
             config.Property(columnName).IsRequired(required);
             config.HasIndex(columnName);
