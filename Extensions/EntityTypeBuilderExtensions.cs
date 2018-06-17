@@ -16,16 +16,22 @@ namespace Utilities.Extensions
             config.HasKey(t => t.Id);
         }
 
-        public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool required = true, string columnName = null) where T : Entity
+        public static EntityTypeBuilder<T> DefineForeignKey<T>(
+            this EntityTypeBuilder<T> config,
+            Type entityType,
+            bool required = true,
+            string columnName = null,
+            DeleteBehavior defaultDeleteBehavior = DeleteBehavior.Cascade
+        ) where T : Entity
         {
             columnName = columnName ?? $"{entityType.Name}Id";
 
             config.Property(columnName).IsRequired(required);
             config.HasIndex(columnName);
 
-            var deleteBehavior = DeleteBehavior.Cascade;
+            var deleteBehavior = defaultDeleteBehavior;
 
-            // Optional entries: set to null on delete
+            // Optional entries: set to null on delete always
             if (!required)
                 deleteBehavior = DeleteBehavior.SetNull;
 
@@ -34,12 +40,11 @@ namespace Utilities.Extensions
                 deleteBehavior = DeleteBehavior.Restrict;
 
             // Change FK delete behaviour if not Cascade (the default)
-            var foreignKeys = config.Metadata.GetForeignKeys()
-                .Where(fk => fk.PrincipalEntityType.ClrType == entityType);
-            foreach (var foreignKey in foreignKeys)
-            {
-                foreignKey.DeleteBehavior = deleteBehavior;
-            }
+            var foreignKey = config.Metadata.GetForeignKeys()
+                .Single(i => i.PrincipalEntityType.ClrType == entityType);
+            foreignKey.DeleteBehavior = deleteBehavior;
+
+            return config;
         }
     }
 }
