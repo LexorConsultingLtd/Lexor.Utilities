@@ -14,7 +14,6 @@ namespace Utilities.Extensions
             config.ToTable(tableName);
             config.Property(t => t.Id).IsRequired();
             config.HasKey(t => t.Id);
-            config.Ignore(t => t.DomainEvents);
         }
 
         public static void DefineForeignKey<T>(this EntityTypeBuilder<T> config, Type entityType, bool required = true) where T : Entity

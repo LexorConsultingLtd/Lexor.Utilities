@@ -21,8 +21,11 @@ namespace Utilities.Extensions
             foreach (var configType in configTypes)
             {
                 var config = Activator.CreateInstance(configType.ConfigClass);
-                var method = typeof(ModelBuilder)
-                    .GetMethod(nameof(modelBuilder.ApplyConfiguration))
+                var method = typeof(ModelBuilder).GetMethods()
+                    .First(i =>
+                        i.Name == nameof(ModelBuilder.ApplyConfiguration) &&
+                        i.GetParameters().All(p => p.ParameterType.Name == typeof(IEntityTypeConfiguration<>).Name)
+                    )
                     .MakeGenericMethod(configType.GenericType);
                 method.Invoke(modelBuilder, new[] { config });
             }
