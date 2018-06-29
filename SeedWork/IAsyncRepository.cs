@@ -7,7 +7,6 @@ namespace Utilities.SeedWork
     public interface IAsyncRepository<T> where T : IAggregateRoot
     {
         ClaimsPrincipal User { set; }
-        IUnitOfWork UnitOfWork { get; }
 
         Task<T> GetByIdAsync(int id);
         Task<T> GetSingleBySpecAsync(ISpecification<T> spec, bool trackChanges = false);
