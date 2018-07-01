@@ -11,8 +11,11 @@ namespace Utilities.Extensions
     {
         public static IEnumerable<SelectListItem> AsSelectListItems<T>(
             this IEnumerable<T> entities,
-            Func<T, string> valueExpr
+            Func<T, string> textExpr,
+            Func<T, object> sortExpr = null
         ) where T : Entity =>
-            entities.Select(i => new SelectListItem(valueExpr.Invoke(i), i.Id.ToString()));
+            entities
+                .OrderBy(sortExpr ?? textExpr)
+                .Select(i => new SelectListItem(textExpr.Invoke(i), i.Id.ToString()));
     }
 }
