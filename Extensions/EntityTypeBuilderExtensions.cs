@@ -41,7 +41,7 @@ namespace Utilities.Extensions
 
             // Change FK delete behaviour if not Cascade (the default)
             var foreignKey = config.Metadata.GetForeignKeys()
-                .Single(i => i.PrincipalEntityType.ClrType == entityType);
+                .Single(i => i.Properties.Any(j => j.Name == columnName));
             foreignKey.DeleteBehavior = deleteBehavior;
 
             return config;
