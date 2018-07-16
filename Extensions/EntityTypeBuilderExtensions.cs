@@ -27,7 +27,7 @@ namespace Utilities.Extensions
             columnName = columnName ?? $"{entityType.Name}Id";
 
             config.Property(columnName).IsRequired(required);
-            config.HasIndex(columnName);
+            config.HasIndex(columnName).IsUnique(false);
 
             var deleteBehavior = defaultDeleteBehavior;
 
