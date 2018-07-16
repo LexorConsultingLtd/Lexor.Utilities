@@ -17,5 +17,17 @@ namespace Utilities.Extensions
             entities
                 .OrderBy(sortExpr ?? textExpr)
                 .Select(i => new SelectListItem(textExpr.Invoke(i), i.Id.ToString()));
+
+        public static IEnumerable<SelectListItem> AsSelectListItems<T>(
+            this IEnumerable<T> objects,
+            Func<T, string> valueExpr,
+            Func<T, string> textExpr,
+            Func<T, object> sortExpr = null
+        ) =>
+            objects
+                .OrderBy(sortExpr ?? textExpr)
+                .Select(
+                    i => new SelectListItem(textExpr.Invoke(i), valueExpr.Invoke(i))
+                );
     }
 }
