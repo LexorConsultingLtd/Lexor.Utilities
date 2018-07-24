@@ -14,7 +14,8 @@ namespace Utilities.Extensions
         public static string FormatDate(this DateTime value) => value.ToString("MMM d, yyyy");
         public static string FormatTime(this DateTime value) => value.ToString("hh:mm tt");
         public static string FormatTimestamp(this DateTime value) => value.ToString("MMM d, yyyy hh:mm:ss tt");
-        public static string FormatIso(this DateTime value) => value.ToString("yyyy-mm-ddTHH:mm:ss");
+        public static string FormatIso(this DateTime value) => value.ToString("yyyy-MM-ddTHH:mm:ss");
+        public static string FormatIsoDateOnly(this DateTime value) => value.ToString("yyyy-MM-dd");
 
         public static string Format(this DateTime value)
         {
