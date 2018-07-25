@@ -11,7 +11,7 @@ namespace Utilities.Extensions
         {
             CheckType();
             var items = new List<SelectListItem>();
-            if (blankItemText != null) items.Add(new SelectListItem { Text = blankItemText });
+            if (blankItemText != null) items.Add(new SelectListItem(blankItemText, ""));
 
             items.AddRange(
                 Enum.GetNames(typeof(T))
