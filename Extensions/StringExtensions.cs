@@ -29,5 +29,8 @@ namespace Utilities.Extensions
 
         public static bool IsNullOrEmpty(this string s) => string.IsNullOrEmpty(s);
         public static bool HasValue(this string s) => !string.IsNullOrEmpty(s);
+
+        public static string EscapeJavascriptString(this string s) => s
+            .Replace(@"\", @"\\");
     }
 }
