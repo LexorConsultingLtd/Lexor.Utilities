@@ -9,15 +9,15 @@ namespace Utilities.Extensions
 
         public static object GetPrivateProperty(this object instance, Type type, string propertyName)
         {
-            var bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-            FieldInfo field = type.GetField(propertyName, bindFlags);
+            const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+            var field = type.GetField(propertyName, bindFlags);
             return field?.GetValue(instance);
         }
 
         public static void SetPrivateProperty(this object instance, Type type, string propertyName, object value)
         {
-            var bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-            FieldInfo field = type.GetField(propertyName, bindFlags);
+            const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+            var field = type.GetField(propertyName, bindFlags);
             field?.SetValue(instance, value);
         }
     }
