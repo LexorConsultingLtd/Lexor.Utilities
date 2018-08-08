@@ -30,5 +30,37 @@ namespace Utilities.SeedWork
         {
             IncludeStrings.Add(string.Join(".", includeString));
         }
+
+        #region SpecIncludeNode
+
+        protected class SpecIncludeNode
+        {
+            public string Name { get; }
+            public SpecIncludeNode[] Children { get; }
+
+            public SpecIncludeNode(string name, SpecIncludeNode[] children = null)
+            {
+                Name = name;
+                Children = children;
+            }
+        }
+
+        #endregion
+
+        protected virtual void AddInclude(SpecIncludeNode includeNode, string[] parentIncludes = null)
+        {
+            var includes = new List<string>();
+            if (parentIncludes != null)
+                includes.AddRange(parentIncludes);
+
+            includes.Add(includeNode.Name);
+            var includesArray = includes.ToArray();
+            AddInclude(includesArray);
+
+            foreach (var child in includeNode.Children ?? new SpecIncludeNode[] { })
+            {
+                AddInclude(child, includesArray);
+            }
+        }
     }
 }
