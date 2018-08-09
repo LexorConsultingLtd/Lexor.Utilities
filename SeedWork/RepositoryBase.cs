@@ -27,9 +27,9 @@ namespace Utilities.SeedWork
             return await Context.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> GetSingleBySpecAsync(ISpecification<T> spec, bool trackChanges = false)
+        public async Task<T> GetSingleBySpecAsync(ISpecification<T> spec, bool trackChanges = false, bool ignoreQueryFilters = false)
         {
-            return (await ListAsync(spec, trackChanges)).FirstOrDefault();
+            return (await ListAsync(spec, trackChanges, ignoreQueryFilters)).FirstOrDefault();
         }
 
         public async Task<List<T>> ListAllAsync()
@@ -37,7 +37,7 @@ namespace Utilities.SeedWork
             return await Context.Set<T>().AsNoTracking().ToListAsync();
         }
 
-        public async Task<List<T>> ListAsync(ISpecification<T> spec, bool trackChanges = false)
+        public async Task<List<T>> ListAsync(ISpecification<T> spec, bool trackChanges = false, bool ignoreQueryFilters = false)
         {
             // fetch a Queryable that includes all expression-based includes
             var queryableResultWithIncludes = spec.Includes
@@ -67,6 +67,9 @@ namespace Utilities.SeedWork
 
             if (!trackChanges)
                 result = result.AsNoTracking();
+
+            if (ignoreQueryFilters) //TODO: does this actually work as intended i.e. are deleted records included? How about deleted child records?
+                result = result.IgnoreQueryFilters();
 
             // Return results
             return await result.ToListAsync();

@@ -9,9 +9,9 @@ namespace Utilities.SeedWork
         ClaimsPrincipal User { set; }
 
         Task<T> GetByIdAsync(int id);
-        Task<T> GetSingleBySpecAsync(ISpecification<T> spec, bool trackChanges = false);
+        Task<T> GetSingleBySpecAsync(ISpecification<T> spec, bool trackChanges = false, bool ignoreQueryFilters = false);
         Task<List<T>> ListAllAsync();
-        Task<List<T>> ListAsync(ISpecification<T> spec, bool trackChanges = false);
+        Task<List<T>> ListAsync(ISpecification<T> spec, bool trackChanges = false, bool ignoreQueryFilters = false);
         Task<RecordCounts> CountAsync(ISpecification<T> spec);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
