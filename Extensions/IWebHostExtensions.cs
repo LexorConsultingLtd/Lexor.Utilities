@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 
 namespace Utilities.Extensions
 {
+    // ReSharper disable once InconsistentNaming
     public static class IWebHostExtensions
     {
         public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider, IWebHost> seeder) where TContext : DbContext

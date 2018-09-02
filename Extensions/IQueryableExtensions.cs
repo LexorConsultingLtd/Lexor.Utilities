@@ -1,28 +1,55 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Linq.Expressions;
+using Utilities.DataTables;
 
 namespace Utilities.Extensions
 {
+    // Inspiration: https://stackoverflow.com/a/36303246
+
+    // ReSharper disable once InconsistentNaming
     public static class IQueryableExtensions
     {
-        public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, DataTablesAjaxPostModel model)
         {
-            return source.OrderBy(ToLambda<T>(propertyName));
+            var expression = source.Expression;
+            var firstSortField = true;
+            foreach (var order in model.order)
+            {
+                var sortField = model.columns[order.column].data;
+                var sortAscending = order.dir.ToLower().Equals("asc");
+
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var selector = GetSelector(parameter, sortField);
+                var method = GetSortMethodName(sortAscending, firstSortField);
+                expression = Expression.Call(
+                    typeof(Queryable),
+                    method,
+                    new[] { source.ElementType, selector.Type },
+                    expression,
+                    Expression.Quote(Expression.Lambda(selector, parameter))
+                );
+                firstSortField = false;
+            }
+            return firstSortField ? source : source.Provider.CreateQuery<T>(expression);
         }
 
-        public static IOrderedQueryable<T> OrderByDescending<T>(this IQueryable<T> source, string propertyName)
+        private static Expression GetSelector(Expression parameter, string sortField)
         {
-            return source.OrderByDescending(ToLambda<T>(propertyName));
+            var selector = sortField
+                .Split(".")
+                .Aggregate<string, Expression>(
+                    null,
+                    (current, fieldName) => Expression.PropertyOrField(current ?? parameter, fieldName)
+                );
+            return selector;
         }
 
-        private static Expression<Func<T, object>> ToLambda<T>(string propertyName)
+        private static string GetSortMethodName(bool sortAscending, bool firstSortField)
         {
-            var parameter = Expression.Parameter(typeof(T));
-            var property = Expression.Property(parameter, propertyName);
-            var propAsObject = Expression.Convert(property, typeof(object));
-
-            return Expression.Lambda<Func<T, object>>(propAsObject, parameter);
+            var method = sortAscending
+                ? firstSortField ? nameof(Queryable.OrderBy) : nameof(Queryable.ThenBy)
+                : firstSortField ? nameof(Queryable.OrderByDescending) : nameof(Queryable.ThenByDescending);
+            return method;
         }
     }
 }

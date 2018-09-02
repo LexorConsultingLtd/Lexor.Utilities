@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace Utilities.Extensions
 {
-    public static class TempDataDictionaryExtensions
+    // ReSharper disable once InconsistentNaming
+    public static class ITempDataDictionaryExtensions
     {
         private enum AlertMessageType
         {

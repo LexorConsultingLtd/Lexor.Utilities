@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Utilities.DataTables;
+using Utilities.Extensions;
 
 namespace Utilities.SeedWork
 {
@@ -126,7 +126,7 @@ namespace Utilities.SeedWork
         public async Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : Entity
         {
             Context.Set<TEntity>().Update(entity);
-            var rowsUpdated = await Context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             return entity;
         }
 

@@ -4,6 +4,7 @@ using Utilities.SeedWork;
 
 namespace Utilities.Extensions
 {
+    // ReSharper disable once InconsistentNaming
     public static class IListExtensions
     {
         public static void CopyValues<T>(this IList<T> list, IList<T> source) where T : Entity

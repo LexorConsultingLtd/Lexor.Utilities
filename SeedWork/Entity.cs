@@ -28,24 +28,26 @@ namespace Utilities.SeedWork
 
             var item = (Entity)obj;
 
-            if (item.IsTransient() || this.IsTransient())
+            if (item.IsTransient() || IsTransient())
                 return false;
-            else
-                return item.Id == this.Id;
+
+            return item.Id == Id;
         }
 
         public override int GetHashCode()
         {
             if (!IsTransient())
             {
+                // ReSharper disable NonReadonlyMemberInGetHashCode
                 if (!_requestedHashCode.HasValue)
                     _requestedHashCode = Id.GetHashCode() ^ 31; // XOR for random distribution (http://blogs.msdn.com/b/ericlippert/archive/2011/02/28/guidelines-and-rules-for-gethashcode.aspx)
 
                 return _requestedHashCode.Value;
+                // ReSharper restore NonReadonlyMemberInGetHashCode
             }
-            else
-                return base.GetHashCode();
 
+            // ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
+            return base.GetHashCode();
         }
 
         public static bool operator ==(Entity left, Entity right)
