@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedMember.Global
 
 namespace Utilities.Extensions
 {
@@ -32,5 +35,36 @@ namespace Utilities.Extensions
 
         public static string EscapeJavascriptString(this string s) => s
             .Replace(@"\", @"\\");
+
+        public static void ParseUnitNumber(this string unit, out int numberValue, out string letterValue)
+        {
+            numberValue = 0;
+            letterValue = null;
+            if (unit.IsNullOrEmpty()) return;
+
+            // Remove any "bad" characters
+            unit = unit.Replace(" ", "");
+
+            // Find any leading number in the unit string
+            var leadingNumber = Regex.Matches(unit, @"^\d+")
+                .Select(i => i.Value)
+                .FirstOrDefault();
+            if (leadingNumber == null)
+            {
+                letterValue = unit;
+                return;
+            }
+
+            numberValue = Convert.ToInt32(leadingNumber);
+            letterValue = unit.Substring(leadingNumber.Length);
+        }
+
+        public static bool IsNumeric(this string s) => int.TryParse(s, out _);
+
+        public static string GetUnitNumberSortKey(this string unit)
+        {
+            ParseUnitNumber(unit, out var numberValue, out var letterValue);
+            return $"{numberValue:d6}{letterValue}";
+        }
     }
 }
