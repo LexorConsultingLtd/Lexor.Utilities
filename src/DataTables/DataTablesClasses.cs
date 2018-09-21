@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
 // ReSharper disable InconsistentNaming
 
 namespace Utilities.DataTables
@@ -33,6 +35,17 @@ namespace Utilities.DataTables
 
         public string SearchAnywhereExpression => string.IsNullOrWhiteSpace(value) ? "" : $"%{value.Trim().Replace(" ", "%")}%";
         public string SearchStartExpression => string.IsNullOrWhiteSpace(value) ? "" : $"{value.Trim()}%";
+
+        public string SearchFormattedName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(value)) return "";
+                var search = value.Replace(",", "%, ") + "%";
+                search = Regex.Replace(search, @"\s+", " ");
+                return search;
+            }
+        }
     }
 
     public class Order
