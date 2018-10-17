@@ -12,10 +12,15 @@ namespace Utilities.Extensions
         public static bool HasTimeComponent(this DateTime value) => !DateOnly(value);
 
         public static string FormatDate(this DateTime value) => value.ToString("MMM d, yyyy");
+        public static string FormatDate(this DateTime? value) => value.HasValue ? value.Value.FormatDate() : "";
         public static string FormatTime(this DateTime value) => value.ToString("hh:mm tt");
+        public static string FormatTime(this DateTime? value) => value.HasValue ? value.Value.FormatTime() : "";
         public static string FormatTimestamp(this DateTime value) => value.ToString("MMM d, yyyy hh:mm:ss tt");
+        public static string FormatTimestamp(this DateTime? value) => value.HasValue ? value.Value.FormatTimestamp() : "";
         public static string FormatIso(this DateTime value) => value.ToString("yyyy-MM-ddTHH:mm:ss");
+        public static string FormatIso(this DateTime? value) => value.HasValue ? value.Value.FormatIso() : "";
         public static string FormatIsoDateOnly(this DateTime value) => value.ToString("yyyy-MM-dd");
+        public static string FormatIsoDateOnly(this DateTime? value) => value.HasValue ? value.Value.FormatIsoDateOnly() : "";
 
         public static string Format(this DateTime value)
         {
