@@ -130,6 +130,24 @@ namespace Utilities.SeedWork
             return entity;
         }
 
+        public async Task<TEntity> WriteAsync<TEntity>(TEntity values) where TEntity : Entity
+        {
+            if (values.IsTransient())
+            {
+                // Create
+                var newEntity = await AddAsync(values);
+                return newEntity;
+            }
+
+            // Update
+            var entity = await GetByIdAsync<TEntity>(values.Id);
+            if (entity == null) return null;
+
+            entity.CopyValues(values);
+            await UpdateAsync(entity);
+            return entity;
+        }
+
         public async Task<bool> DeleteAsync<TEntity>(int id) where TEntity : Entity
         {
             var entity = await GetByIdAsync<TEntity>(id);

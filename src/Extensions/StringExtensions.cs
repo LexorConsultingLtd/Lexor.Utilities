@@ -66,5 +66,14 @@ namespace Utilities.Extensions
             ParseUnitNumber(unit, out var numberValue, out var letterValue);
             return $"{numberValue:d6}{letterValue}";
         }
+
+        public static string Repeat(this string input, int count)
+        {
+            if (input.IsNullOrEmpty()) return string.Empty;
+
+            var sb = new StringBuilder(input.Length * count);
+            for (var i = 0; i < count; i++) sb.Append(input);
+            return sb.ToString();
+        }
     }
 }

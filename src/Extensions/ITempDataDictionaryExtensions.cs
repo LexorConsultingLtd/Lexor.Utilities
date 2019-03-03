@@ -35,5 +35,13 @@ namespace Utilities.Extensions
                 yield return (alertMessage.Replace(AlertPrefix, "").ToLower(), (string)tempData[alertMessage]);
             }
         }
+
+        public static void WriteUpdateMessage(this ITempDataDictionary tempData, bool success, string subject, string action)
+        {
+            if (success)
+                tempData.AddSuccessMessage($"The {subject} was {action}");
+            else
+                tempData.AddErrorMessage($"The {subject} could not be {action}");
+        }
     }
 }

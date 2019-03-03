@@ -22,6 +22,7 @@ namespace Utilities.SeedWork
         Task<TEntity> GetByIdAsync<TEntity>(int id) where TEntity : Entity;
         Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : Entity;
         Task<TEntity> UpdateAsync<TEntity>(TEntity entity) where TEntity : Entity;
+        Task<TEntity> WriteAsync<TEntity>(TEntity values) where TEntity : Entity;
         Task<bool> DeleteAsync<TEntity>(int id) where TEntity : Entity;
         Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : Entity;
 

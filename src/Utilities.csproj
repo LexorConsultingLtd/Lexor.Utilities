@@ -10,7 +10,7 @@
     <Product>Lexor Utilities</Product>
     <Description>A collection of various utilities used for Lexor development</Description>
     <PackageTags />
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageReleaseNotes>This package is not for public consumption and no support will be provided.</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -24,8 +24,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
-    <PackageReference Include="Polly" Version="6.0.1" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.0" />
+    <PackageReference Include="NCrontab" Version="3.3.1" />
+    <PackageReference Include="Polly" Version="7.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
   </ItemGroup>
 
 </Project>
