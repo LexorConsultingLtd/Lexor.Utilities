@@ -10,27 +10,24 @@ using Utilities.SeedWork;
 namespace Utilities.Services
 {
     [SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
-    public abstract class DataAccessServiceBase<T> where T : IAggregateRoot
+    public abstract class DataAccessServiceBase<TEntity, TDbContext>
+        where TEntity : IAggregateRoot
+        where TDbContext : DbContext, IUserDbContext
     {
-        protected DbContext Context { get; }
-        protected IAsyncRepository<T> Repository { get; }
+        protected TDbContext Context { get; }
+        protected IAsyncRepository<TEntity> Repository { get; }
 
-        protected DataAccessServiceBase(IAsyncRepository<T> repository, DbContext context)
+        protected DataAccessServiceBase(IAsyncRepository<TEntity> repository, TDbContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
             Repository = repository ?? throw new ArgumentNullException(nameof(repository));
-
-            if (UserDbContext == null)
-                throw new ArgumentException($"{nameof(context)} must implement {typeof(IUserDbContext)}");
         }
-
-        protected IUserDbContext UserDbContext => Context as IUserDbContext;
 
         protected ClaimsPrincipal User
         {
             set
             {
-                UserDbContext.User = value;
+                Context.User = value;
                 Repository.User = value;
             }
         }

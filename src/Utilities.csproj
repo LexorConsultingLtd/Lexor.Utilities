@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Lexor.Utilities</AssemblyName>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Lexor.Utilities</PackageId>
     <Authors>Steve Lamotte</Authors>
     <Company>Lexor Consulting Ltd.</Company>
