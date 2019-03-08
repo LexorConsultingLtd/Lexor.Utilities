@@ -5,15 +5,16 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using System;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Utilities.Extensions
 {
     // ReSharper disable once InconsistentNaming
     public static class IWebHostExtensions
     {
-        public static IWebHost MigrateDbContext<TContext>(
+        public static async Task<IWebHost> MigrateDbContextAsync<TContext>(
             this IWebHost webHost,
-            Action<IServiceProvider, IWebHost> seeder
+            Func<IServiceProvider, IWebHost, Task> seederAsync
         ) where TContext : DbContext
         {
             using (var scope = webHost.Services.CreateScope())
@@ -34,21 +35,12 @@ namespace Utilities.Extensions
                              TimeSpan.FromSeconds(15),
                          });
 
-                    retry.Execute(() =>
+                    await retry.Execute(async () =>
                     {
-                        //if the sql server container is not created on run docker compose this
-                        //migration can't fail for network related exception. The retry options for DbContext only 
-                        //apply to transient exceptions.
-
-                        context.Database.Migrate();
-
-                        // Create new scope for seeding
-                        using (var seedScope = services.CreateScope())
-                        {
-                            seeder(seedScope.ServiceProvider, webHost);
-                        }
+                        // Migrate the database and invoke seeding
+                        await context.Database.MigrateAsync();
+                        await seederAsync(services, webHost);
                     });
-
 
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
                 }
@@ -62,5 +54,3 @@ namespace Utilities.Extensions
         }
     }
 }
-
-
