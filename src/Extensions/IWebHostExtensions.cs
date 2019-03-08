@@ -11,13 +11,16 @@ namespace Utilities.Extensions
     // ReSharper disable once InconsistentNaming
     public static class IWebHostExtensions
     {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost webHost, Action<TContext, IServiceProvider, IWebHost> seeder) where TContext : DbContext
+        public static IWebHost MigrateDbContext<TContext>(
+            this IWebHost webHost,
+            Action<IServiceProvider, IWebHost> seeder
+        ) where TContext : DbContext
         {
             using (var scope = webHost.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var logger = services.GetRequiredService<ILogger<TContext>>();
-                var context = services.GetService<TContext>();
+                var context = services.GetRequiredService<TContext>();
 
                 try
                 {
@@ -38,7 +41,12 @@ namespace Utilities.Extensions
                         //apply to transient exceptions.
 
                         context.Database.Migrate();
-                        seeder(context, services, webHost);
+
+                        // Create new scope for seeding
+                        using (var seedScope = services.CreateScope())
+                        {
+                            seeder(seedScope.ServiceProvider, webHost);
+                        }
                     });
 
 

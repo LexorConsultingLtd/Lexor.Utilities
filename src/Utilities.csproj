@@ -10,7 +10,7 @@
     <Product>Lexor Utilities</Product>
     <Description>A collection of various utilities used for Lexor development</Description>
     <PackageTags />
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <PackageReleaseNotes>This package is not for public consumption and no support will be provided.</PackageReleaseNotes>
   </PropertyGroup>
 

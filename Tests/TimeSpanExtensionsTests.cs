@@ -6,15 +6,15 @@ namespace Tests
 {
     public class TimeSpanExtensionsTests
     {
-        private readonly DateTime StartDate = new DateTime(2000, 1, 1);
+        private DateTime StartDate { get; } = new DateTime(2000, 1, 1);
 
         #region Format
 
         [Fact]
         public void TestParseUnitNumbers()
         {
-            TestFormat(StartDate.AddDays(1500).Subtract(StartDate), false, "1500 days");
-            TestFormat(StartDate.AddDays(1500).Subtract(StartDate), true, "1500 days");
+            TestFormat(StartDate.AddDays(1500).Subtract(StartDate), false, "1,500 days");
+            TestFormat(StartDate.AddDays(1500).Subtract(StartDate), true, "1,500 days");
 
             TestFormat(StartDate.AddDays(1).Subtract(StartDate), false, "1 day");
             TestFormat(StartDate.AddHours(1).Subtract(StartDate), false, "1 hour");
