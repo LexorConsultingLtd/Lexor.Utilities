@@ -29,5 +29,8 @@ namespace Utilities.Extensions
                 .Select(
                     i => new SelectListItem(textExpr.Invoke(i), valueExpr.Invoke(i))
                 );
+
+        public static string Join(this IEnumerable<object> objects, string separator = ", ") =>
+            string.Join(separator, objects);
     }
 }
