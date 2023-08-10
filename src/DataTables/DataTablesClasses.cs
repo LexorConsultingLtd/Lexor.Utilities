@@ -31,7 +31,7 @@ namespace Utilities.DataTables
     public class Search
     {
         public string value { get; set; }
-        public string regex { get; set; }
+        public bool regex { get; set; }
 
         public string SearchAnywhereExpression => string.IsNullOrWhiteSpace(value) ? "" : $"%{value.Trim().Replace(" ", "%")}%";
         public string SearchStartExpression => string.IsNullOrWhiteSpace(value) ? "" : $"{value.Trim()}%";
