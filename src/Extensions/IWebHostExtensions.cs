@@ -12,9 +12,9 @@ namespace Utilities.Extensions
     // ReSharper disable once InconsistentNaming
     public static class IWebHostExtensions
     {
-        public static async Task<IWebHost> MigrateDbContextAsync<TContext>(
+        public static IWebHost MigrateDbContext<TContext>(
             this IWebHost webHost,
-            Func<IServiceProvider, IWebHost, Task> seederAsync
+            Action<TContext, IServiceProvider, IWebHost> seeder
         ) where TContext : DbContext
         {
             using (var scope = webHost.Services.CreateScope())
@@ -35,11 +35,11 @@ namespace Utilities.Extensions
                              TimeSpan.FromSeconds(15),
                          });
 
-                    await retry.Execute(async () =>
+                    retry.Execute(() =>
                     {
                         // Migrate the database and invoke seeding
-                        await context.Database.MigrateAsync();
-                        await seederAsync(services, webHost);
+                        context.Database.Migrate();
+                        seeder(context, services, webHost);
                     });
 
                     logger.LogInformation($"Migrated database associated with context {typeof(TContext).Name}");
