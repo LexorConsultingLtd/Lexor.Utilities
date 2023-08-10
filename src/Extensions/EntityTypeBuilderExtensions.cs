@@ -11,7 +11,7 @@ namespace Utilities.Extensions
         public static void ConfigureEntity<T>(this EntityTypeBuilder<T> config, string tableName = null) where T : Entity
         {
             tableName = tableName ?? $"{typeof(T).Name}s";
-            config.ToTable(tableName);
+            config.ConfigureEntity(tableName);
             config.Property(t => t.Id).IsRequired();
             config.HasKey(t => t.Id);
         }
@@ -24,7 +24,7 @@ namespace Utilities.Extensions
             DeleteBehavior defaultDeleteBehavior = DeleteBehavior.Cascade
         ) where T : Entity
         {
-            columnName = columnName ?? $"{entityType.Name}Id";
+            columnName ??= $"{entityType.Name}Id";
 
             config.Property(columnName).IsRequired(required);
             config.HasIndex(columnName).IsUnique(false);

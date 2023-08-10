@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Utilities.Extensions
@@ -13,7 +12,7 @@ namespace Utilities.Extensions
             if (timeSpan.Hours > 0) parts.Add($"{timeSpan.Hours.Pluralize("hour")}");
             if (timeSpan.Minutes > 0) parts.Add($"{timeSpan.Minutes.Pluralize("minute")}");
             if (includeSeconds && timeSpan.Seconds > 0) parts.Add($"{timeSpan.Seconds.Pluralize("second")}");
-            return parts.Join(" ");
+            return string.Join(" ", parts);
         }
     }
 }

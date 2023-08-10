@@ -50,10 +50,10 @@ namespace Utilities.SeedWork
 
         private static async Task EnsureTriggerExists(DbContext context, IEntityType entity)
         {
-            var cmds = GetTriggerSql(entity.SqlServer().TableName);
+            var cmds = GetTriggerSql(entity.GetTableName());
             foreach (var cmd in cmds)
             {
-                await context.Database.ExecuteSqlCommandAsync(cmd);
+                await context.Database.ExecuteSqlRawAsync(cmd);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>Lexor.Utilities</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Lexor.Utilities</PackageId>
@@ -10,7 +10,7 @@
     <Product>Lexor Utilities</Product>
     <Description>A collection of various utilities used for Lexor development</Description>
     <PackageTags />
-    <Version>1.1.0</Version>
+    <Version>3.0.0</Version>
     <PackageReleaseNotes>This package is not for public consumption and no support will be provided.</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -23,9 +23,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.RazorPages" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.3" />
     <PackageReference Include="NCrontab" Version="3.3.1" />
     <PackageReference Include="Polly" Version="7.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.5.1" />
   </ItemGroup>
 
